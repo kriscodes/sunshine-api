@@ -1,7 +1,30 @@
 const express = require("express");
+import cors from 'cors';
+
 const app = express();
 const pool = require("./db");
 require("dotenv").config();
+
+// List of allowed origins
+const allowedOrigins = [
+  "https://admin.sunshinepreschool1-2.org",
+  "https://www.sunshinepreschool1-2.org"
+];
+
+// ✅ Dynamic CORS origin check
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
 
 // Middleware
 app.use(express.json());
