@@ -32,10 +32,10 @@ app.use(cors({
 app.use(express.json());
 
 // Import routes
-const userRoutes = require("./routes/users");
-const eventRoutes = require("./routes/events");
-const contactRoutes = require("./routes/contact");
-const tourRoutes = require("./routes/tours");
+import userRoutes from "./routes/users.js";
+import eventRoutes from "./routes/events.js";
+import contactRoutes from "./routes/contact.js";
+import tourRoutes from "./routes/tours.js";
 
 // Use routes
 app.use("/users", userRoutes);
