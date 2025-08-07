@@ -1,9 +1,10 @@
-const express = require("express");
+import express from "express";
 import cors from 'cors';
+import pool from "./db.js";
 
 const app = express();
-const pool = require("./db");
-require("dotenv").config();
+
+dotenv.config();
 
 // List of allowed origins
 const allowedOrigins = [
