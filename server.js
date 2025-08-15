@@ -10,7 +10,7 @@ dotenv.config();
 // List of allowed origins
 const allowedOrigins = [
   "https://admin.sunshinepreschool1-2.org",
-  "https://www.sunshinepreschool1-2.org"
+  "https://sunshinepreschool1-2.org"
 ];
 
 // ✅ Dynamic CORS origin check
