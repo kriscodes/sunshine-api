@@ -40,7 +40,7 @@ import tourRoutes from "./routes/tours.js";
 // Use routes
 app.use("/users", userRoutes);
 app.use("/events", eventRoutes);
-app.use("/contact-us", contactRoutes);
+app.use("/contacts", contactRoutes);
 app.use("/tours", tourRoutes);
 
 // Root endpoint
