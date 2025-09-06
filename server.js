@@ -11,7 +11,7 @@ dotenv.config();
 const allowedOrigins = [
   "https://admin.sunshinepreschool1-2.org",
   "https://sunshinepreschool1-2.org",
-  "http://localhost:3000/"
+  "http://localhost:3000"
 ];
 
 // ✅ Dynamic CORS origin check
