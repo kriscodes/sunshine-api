@@ -14,12 +14,12 @@ router.get("/", async (req, res) => {
 
 // Add new tour request
 router.post("/", async (req, res) => {
-  const { first_name, last_name, email, child_name, program, phone, tour_date, tour_time, school } = req.body;
+  const { parent_name, email, child_name, program, phone, tour_date, tour_time, school, notes } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO tour (first_name, last_name, email, child_name, program, phone, tour_date, tour_time, school) 
+      `INSERT INTO tour (parent_name , email, child_name, program, phone, tour_date, tour_time, school, notes) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-      [first_name, last_name, email, child_name, program, phone, tour_date, tour_time, school]
+      [parent_name, email, child_name, program, phone, tour_date, tour_time, school, notes]
     );
     res.json(result.rows[0]);
   } catch (err) {
