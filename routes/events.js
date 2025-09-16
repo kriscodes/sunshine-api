@@ -59,12 +59,7 @@ router.put('/:id', async (req, res) => {
     const dateStr = typeof date === 'string' && date.length > 10 ? date.slice(0, 10) : date;
 
     // Update row
-    const [result] = await pool.query(
-      `UPDATE events
-       SET name = ?, date = ?, location = ?, description = ?
-       WHERE id = ?`,
-      [name, dateStr, location, description, id]
-    );
+    const [result] = await pool.query("UPDATE events SET name = ?, date = ?, location = ?, description = ? WHERE id = ?", [name, dateStr, location, description, id]);
 
     // mysql2 returns an object with affectedRows on UPDATE
     if (!result || result.affectedRows === 0) {
@@ -72,12 +67,7 @@ router.put('/:id', async (req, res) => {
     }
 
     // Return the updated record (optional but nice for the UI)
-    const [rows] = await pool.query(
-      `SELECT id, name, date, location, description
-       FROM events
-       WHERE id = ?`,
-      [id]
-    );
+    const [rows] = await pool.query("SELECT id, name, date, location, description FROM events WHERE id = ?", [id]);
 
     return res.status(200).json(rows[0] ?? { id, name, date: dateStr, location, description });
   } catch (err) {
