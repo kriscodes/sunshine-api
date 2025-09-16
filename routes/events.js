@@ -26,6 +26,47 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT /api/events/:id
+router.put('/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name, date, location, description } = normalizePayload(req.body);
+
+    if (!name || !date || !location || !description) {
+      return res.status(400).json({ error: 'Missing required fields: name, date, location, description' });
+    }
+
+    // If the UI sends an ISO string, trim to YYYY-MM-DD for DATE columns
+    const dateStr = typeof date === 'string' && date.length > 10 ? date.slice(0, 10) : date;
+
+    // Update row
+    const [result] = await db.query(
+      `UPDATE events
+       SET name = ?, date = ?, location = ?, description = ?
+       WHERE id = ?`,
+      [name, dateStr, location, description, id]
+    );
+
+    // mysql2 returns an object with affectedRows on UPDATE
+    if (!result || result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    // Return the updated record (optional but nice for the UI)
+    const [rows] = await db.query(
+      `SELECT id, name, date, location, description
+       FROM events
+       WHERE id = ?`,
+      [id]
+    );
+
+    return res.status(200).json(rows[0] ?? { id, name, date: dateStr, location, description });
+  } catch (err) {
+    console.error('PUT /events/:id error', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Delete event by ID
 router.delete("/:id", async (req, res) => {
   try {
