@@ -70,7 +70,7 @@ router.put('/:id', async (req, res) => {
     }
 
     // Return the updated record (optional but nice for the UI)
-    const [rows] = await pool.query("SELECT id, name, date, location, description FROM events WHERE id = ?", [id]);
+    //const [rows] = await pool.query("SELECT id, name, date, location, description FROM events WHERE id = ?", [id]);
 
     return res.status(200).json(rows[0] ?? { id, name, date: dateStr, location, description });
   } catch (err) {
