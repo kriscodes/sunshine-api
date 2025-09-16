@@ -59,7 +59,10 @@ router.put('/:id', async (req, res) => {
     const dateStr = typeof date === 'string' && date.length > 10 ? date.slice(0, 10) : date;
 
     // Update row
-    const [result] = await pool.query("UPDATE events SET name = ?, date = ?, location = ?, description = ? WHERE id = ?", [name, dateStr, location, description, id]);
+    const result = await pool.query(
+  "UPDATE events SET name = $1, date = $2, location = $3, description = $4 WHERE id = $5",
+  [name, dateStr, location, description, id]
+);
 
     // mysql2 returns an object with affectedRows on UPDATE
     if (!result || result.affectedRows === 0) {
