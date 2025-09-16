@@ -26,6 +26,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+// --- minimal fix: define normalizePayload used by PUT ---
+function normalizePayload(body = {}) {
+  // Accept both `name` (current Admin UI) and `title` (older code), prefer `name`
+  const name = body.name ?? body.title ?? '';
+
+  // If the UI sends an ISO datetime, trim to DATE-only (YYYY-MM-DD)
+  let date = body.date ?? '';
+  if (typeof date === 'string' && date.length > 10) {
+    date = date.slice(0, 10);
+  }
+
+  return {
+    name,
+    date,
+    location: body.location ?? '',
+    description: body.description ?? '',
+  };
+}
+
 // PUT /api/events/:id
 router.put('/:id', async (req, res) => {
   try {
