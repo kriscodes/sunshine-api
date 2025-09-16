@@ -59,7 +59,7 @@ router.put('/:id', async (req, res) => {
     const dateStr = typeof date === 'string' && date.length > 10 ? date.slice(0, 10) : date;
 
     // Update row
-    const [result] = await db.query(
+    const [result] = await pool.query(
       `UPDATE events
        SET name = ?, date = ?, location = ?, description = ?
        WHERE id = ?`,
@@ -72,7 +72,7 @@ router.put('/:id', async (req, res) => {
     }
 
     // Return the updated record (optional but nice for the UI)
-    const [rows] = await db.query(
+    const [rows] = await pool.query(
       `SELECT id, name, date, location, description
        FROM events
        WHERE id = ?`,
