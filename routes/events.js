@@ -72,7 +72,7 @@ router.put('/:id', async (req, res) => {
     // Return the updated record (optional but nice for the UI)
     //const [rows] = await pool.query("SELECT id, name, date, location, description FROM events WHERE id = ?", [id]);
 
-    return res.status(200).json(rows[0] ?? { id, name, date: dateStr, location, description });
+    return res.status(200).json({id, name, date: dateStr, location, description });
   } catch (err) {
     console.error('PUT /events/:id error', err);
     return res.status(500).json({ error: 'Internal server error' });
